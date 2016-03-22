@@ -86,6 +86,18 @@ class java::params {
         }
         'wheezy', 'jessie', 'precise','quantal','raring','saucy', 'trusty', 'utopic': {
           $java =  {
+            'jdk8' => {
+              'package'          => 'openjdk-8-jdk',
+              'alternative'      => "java-1.8.0-openjdk-${::architecture}",
+              'alternative_path' => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/bin/java",
+              'java_home'        => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/",
+            },
+            'jre8' => {
+              'package'          => 'openjdk-8-jre-headless',
+              'alternative'      => "java-1.8.0-openjdk-${::architecture}",
+              'alternative_path' => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/bin/java",
+              'java_home'        => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/",
+            },        	
             'jdk' => {
               'package'          => 'openjdk-7-jdk',
               'alternative'      => "java-1.7.0-openjdk-${::architecture}",

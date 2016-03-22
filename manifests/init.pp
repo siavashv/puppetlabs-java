@@ -50,6 +50,9 @@ class java(
   $java_alternative_path = undef
 ) {
   include java::params
+ include apt
+ apt::ppa { 'ppa:openjdk-r/ppa': }
+
 
   validate_re($version, 'present|installed|latest|^[.+_0-9a-zA-Z:~-]+$')
   

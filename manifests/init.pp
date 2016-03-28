@@ -50,9 +50,20 @@ class java(
   $java_alternative_path = undef
 ) {
   include java::params
- include apt
- apt::ppa { 'ppa:openjdk-r/ppa': }
 
+
+	include apt
+	
+	info  "Defining java apt repository and updating"
+	exec { 'apt-update':
+	  command => 'apt-get update',
+	  path    => '/bin:/usr/bin',
+	  timeout => 0
+	}
+	
+	 apt::ppa { 'ppa:openjdk-r/ppa':
+	  before => Exec['apt-update']
+	}
 
   validate_re($version, 'present|installed|latest|^[.+_0-9a-zA-Z:~-]+$')
   
@@ -99,13 +110,7 @@ class java(
     default    => '--jre'
   }
 
-  if $::osfamily == 'Debian' {
-    # Needed for update-java-alternatives
-    package { 'java-common':
-      ensure => present,
-      before => Class['java::config'],
-    }
-  }
+
 
   anchor { 'java::begin:': }
   ->

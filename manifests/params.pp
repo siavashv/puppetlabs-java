@@ -91,12 +91,14 @@ class java::params {
               'alternative'      => "java-1.8.0-openjdk-${::architecture}",
               'alternative_path' => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/bin/java",
               'java_home'        => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/",
+            'configured_java_major_version' => '8',
             },
             'jre8' => {
               'package'          => 'openjdk-8-jre-headless',
               'alternative'      => "java-1.8.0-openjdk-${::architecture}",
               'alternative_path' => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/bin/java",
               'java_home'        => "/usr/lib/jvm/java-1.8.0-openjdk-${::architecture}/",
+    		 'configured_java_major_version' => '8',
             },        	
             'jdk' => {
               'package'          => 'openjdk-7-jdk',

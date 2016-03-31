@@ -49,22 +49,15 @@ class java(
   $java_alternative      = undef,
   $java_alternative_path = undef
 ) {
-  include java::params
-
-
-	include apt
+ include java::params
+ include apt
 	
-	info  "Defining java apt repository and updating"
-	exec { 'apt-update':
-	  command => 'apt-get update',
-	  path    => '/bin:/usr/bin',
-	  timeout => 0
+ if (  $distribution == 'jre8' or  $distribution == 'jdk8')   {
+	apt::ppa { 'ppa:openjdk-r/ppa':
+	 before =>  Anchor['java::begin:'],
 	}
+ }
 	
-	 apt::ppa { 'ppa:openjdk-r/ppa':
-	  before => Exec['apt-update']
-	}
-
   validate_re($version, 'present|installed|latest|^[.+_0-9a-zA-Z:~-]+$')
   
   if $package_options != undef {
@@ -118,6 +111,7 @@ class java(
     ensure          => $version,
     install_options => $package_options,
     name            => $use_java_package_name,
+    require         => Class['apt::update'],
   }
   ->
   class { 'java::config': }
